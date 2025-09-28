@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Upload, FileText, Activity, Type } from 'lucide-react';
 
 // ✅ Backend URL
-const API_URL = "http://localhost:5000/analyze-report"; 
+// const API_URL = "http://localhost:5000/analyze-report"; 
+const API_URL = "https://plum-backend-main.onrender.com/analyze-report"; 
 
 // Upload Options Component
 const UploadOptions = ({ onSubmit, isLoading }) => {
@@ -125,7 +126,7 @@ const MedicalReportApp = () => {
         {isLoading && <p className="mt-6 text-blue-600">Processing...</p>}
         {error && <p className="mt-6 text-red-600">{error}</p>}
 
-        {currentReport && (
+{currentReport && (
   <div className="mt-6 space-y-6">
     <h3 className="text-lg font-semibold mb-3">Simplified Summary</h3>
     {Object.entries(currentReport.summary.summary).map(([section, sectionData]) => (
@@ -143,7 +144,7 @@ const MedicalReportApp = () => {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(sectionData.details).map(([test, result], idx) => (
+              {Object.entries(sectionData).map(([test, result]) => (
                 <tr key={test} className="hover:bg-gray-50">
                   <td className="px-3 py-2 border-b capitalize">
                     {test.replace(/_/g, " ")}
@@ -160,7 +161,7 @@ const MedicalReportApp = () => {
                     {result}
                   </td>
                   <td className="px-3 py-2 border-b text-gray-700">
-                    {currentReport.summary.explanations[idx] || "-"}
+                    {currentReport.summary.explanations[test] || "-"}
                   </td>
                 </tr>
               ))}
@@ -171,6 +172,7 @@ const MedicalReportApp = () => {
     ))}
   </div>
 )}
+
       </main>
     </div>
   );
